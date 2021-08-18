@@ -1,5 +1,9 @@
 extern crate image;
 
+mod pixel;
+
+use pixel::Pixel;
+
 fn main() {
     let px_size = 10;
     let px_x: usize = 30;
@@ -11,12 +15,12 @@ fn main() {
     for x in 0..px_x {
         let mut row: Vec<Pixel> = vec![];
         for y in 0..px_y {
-            row.push(Pixel {
-                r: 0,
-                g: if (x + y) % 2 == 0 { 0 } else { 255 },
-                b: 0,
-                a: 255,
-            });
+            row.push(Pixel::new(
+                0,
+                if (x + y) % 2 == 0 { 0 } else { 255 },
+                0,
+                255,
+            ));
         }
         matrix.push(row);
     }
@@ -34,11 +38,4 @@ fn main() {
     }
 
     imgbuf.save("tmp/test.png").unwrap();
-}
-
-struct Pixel {
-    r: u8,
-    g: u8,
-    b: u8,
-    a: u8,
 }
