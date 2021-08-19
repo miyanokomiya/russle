@@ -1,6 +1,7 @@
 extern crate image;
 
 mod pixel;
+mod vec2;
 
 use pixel::Pixel;
 
