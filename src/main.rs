@@ -1,39 +1,21 @@
 extern crate image;
 
+mod canvas;
 mod pixel;
 mod vec2;
 
-use pixel::Pixel;
+use canvas::Canvas;
 
 fn main() {
-    let px_size = 10;
-    let px_x: usize = 30;
-    let px_y: usize = 20;
-    let imgx = (px_size * px_x) as u32;
-    let imgy = (px_size * px_y) as u32;
+    let canvas = Canvas::new(10, 40, 20);
+    let (imgx, imgy) = canvas.get_image_size();
 
-    let mut matrix: Vec<Vec<Pixel>> = vec![];
-    for x in 0..px_x {
-        let mut row: Vec<Pixel> = vec![];
-        for y in 0..px_y {
-            row.push(Pixel::new(
-                0,
-                if (x + y) % 2 == 0 { 0 } else { 255 },
-                0,
-                255,
-            ));
-        }
-        matrix.push(row);
-    }
-
-    // Create a new ImgBuf with width: imgx and height: imgy
     let mut imgbuf = image::ImageBuffer::new(imgx, imgy);
-
-    // A redundant loop to demonstrate reading image data
     for x in 0..imgx {
         for y in 0..imgy {
             let pixel = imgbuf.get_pixel_mut(x, y);
-            let px = &matrix[(x / px_size as u32) as usize][(y / px_size as u32) as usize];
+            let px = canvas.pixels[(x / canvas.px_size as u32) as usize]
+                [(y / canvas.px_size as u32) as usize];
             *pixel = image::Rgba([px.r, px.g, px.b, px.a]);
         }
     }
