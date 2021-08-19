@@ -1,5 +1,7 @@
 use crate::pixel::Pixel;
 
+pub mod rect;
+
 #[derive(Clone, Debug, PartialEq)]
 pub struct Canvas {
     pub px_size: usize,
@@ -11,15 +13,10 @@ pub struct Canvas {
 impl Canvas {
     pub fn new(px_size: usize, x_size: usize, y_size: usize) -> Self {
         let mut pixels: Vec<Vec<Pixel>> = vec![];
-        for x in 0..x_size {
+        for _ in 0..x_size {
             let mut row: Vec<Pixel> = vec![];
-            for y in 0..y_size {
-                row.push(Pixel::new(
-                    0,
-                    if (x + y) % 2 == 0 { 0 } else { 255 },
-                    0,
-                    255,
-                ));
+            for _ in 0..y_size {
+                row.push(Pixel::new(0, 0, 0, 255));
             }
             pixels.push(row);
         }
