@@ -10,12 +10,10 @@ pub struct Canvas {
 
 impl Canvas {
     pub fn new(px_size: usize, x_size: usize, y_size: usize) -> Self {
-        let (px_x, px_y) = get_image_size(px_size, x_size, y_size);
-
         let mut pixels: Vec<Vec<Pixel>> = vec![];
-        for x in 0..px_x {
+        for x in 0..x_size {
             let mut row: Vec<Pixel> = vec![];
-            for y in 0..px_y {
+            for y in 0..y_size {
                 row.push(Pixel::new(
                     0,
                     if (x + y) % 2 == 0 { 0 } else { 255 },
@@ -46,6 +44,13 @@ fn get_image_size(px_size: usize, x_size: usize, y_size: usize) -> (u32, u32) {
 #[cfg(test)]
 mod tests {
     use super::*;
+
+    #[test]
+    fn test_new() {
+        let canvas = Canvas::new(10, 8, 6);
+        assert_eq!(canvas.pixels.len(), 8);
+        assert_eq!(canvas.pixels[0].len(), 6);
+    }
 
     #[test]
     fn test_get_image_size() {
