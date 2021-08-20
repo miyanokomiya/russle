@@ -63,6 +63,13 @@ mod tests {
     use super::*;
 
     #[test]
+    fn test_combine() {
+        let v1 = Pixel::new(10.0, 20.0, 30.0, 40.0);
+        let v2 = Pixel::new(110.0, 220.0, 330.0, 102.0);
+        assert_eq!(Pixel::new(50.0, 100.0, 150.0, 40.0), v1.combine(v2));
+    }
+
+    #[test]
     fn test_add_normal() {
         let v1 = Pixel::new(1.0, 2.0, 3.0, 4.0);
         let v2 = Pixel::new(3.0, 4.0, 5.0, 6.0);
