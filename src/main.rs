@@ -13,7 +13,7 @@ fn main() {
 
     canvas.draw_rect(2.0, 2.0, 2.0, 4.0);
     canvas.draw_rect(10.4, 5.4, 4.8, 2.8);
-    canvas.draw_rect(20.2, 5.0, 4.8, 2.3);
+    canvas.draw_rect(20.9, 5.0, 4.1, 2.3);
 
     let mut imgbuf = image::ImageBuffer::new(imgx, imgy);
     for y in 0..imgy {
