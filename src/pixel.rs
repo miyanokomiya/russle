@@ -1,3 +1,4 @@
+use crate::math::*;
 use std::ops::{Add, Sub};
 
 #[derive(Clone, Copy, Debug, PartialEq)]
@@ -16,6 +17,16 @@ impl Pixel {
             b: b,
             a: a,
         }
+    }
+
+    pub fn combine(self, target: Self) -> Self {
+        let alpha = (target.a as f64) / 255.0;
+        Self::new(
+            lerp(self.r as f64, target.r as f64, alpha).round() as u8,
+            lerp(self.g as f64, target.g as f64, alpha).round() as u8,
+            lerp(self.b as f64, target.b as f64, alpha).round() as u8,
+            self.a,
+        )
     }
 }
 

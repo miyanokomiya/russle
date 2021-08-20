@@ -14,7 +14,7 @@ impl Canvas {
                     height,
                 );
                 if a > 0 {
-                    *pixel = Pixel::new(pixel.r, 255, pixel.b, a);
+                    *pixel = pixel.combine(Pixel::new(0, 255, 0, a));
                 }
             }
         }
@@ -32,21 +32,21 @@ fn get_rect_opacity(vec: Vec2, x: f64, y: f64, width: f64, height: f64) -> u8 {
         return 0;
     }
 
-    let small_x = dx - dx.round();
-    let rate_x = if dx < 0.0 || width < dx {
-        small_x.abs()
+    let rate_x = if dx < 0.0 {
+        dx.round() - dx
+    } else if width < dx {
+        1.0 + width - dx
     } else {
         1.0
     };
 
-    let small_y = dy - dy.round();
-    let rate_y = if dy < 0.0 || height < dy {
-        small_y.abs()
+    let rate_y = if dy < 0.0 {
+        dy.round() - dy
+    } else if height < dy {
+        1.0 + height - dy
     } else {
         1.0
     };
 
-    // (rate_x * rate_y * 255.0).round() as u8
-    // rate_x.max(rate_y) as u8
-    ((rate_x + rate_y) / 2.0 * 255.0) as u8
+    (rate_x * rate_y * 255.0).round() as u8
 }
