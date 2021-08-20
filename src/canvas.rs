@@ -8,15 +8,17 @@ pub struct Canvas {
     pub x_size: usize,
     pub y_size: usize,
     pub pixels: Vec<Vec<Pixel>>,
+    pub fill_color: Pixel,
 }
 
 impl Canvas {
     pub fn new(px_size: usize, x_size: usize, y_size: usize) -> Self {
         let mut pixels: Vec<Vec<Pixel>> = vec![];
-        for _ in 0..y_size {
+        for y in 0..y_size {
             let mut row: Vec<Pixel> = vec![];
-            for _ in 0..x_size {
-                row.push(Pixel::new(0.0, 0.0, 0.0, 255.0));
+            for x in 0..x_size {
+                let val = if (x + y) % 2 == 0 { 255.0 } else { 150.0 };
+                row.push(Pixel::new(val, val, val, 255.0));
             }
             pixels.push(row);
         }
@@ -26,6 +28,7 @@ impl Canvas {
             x_size: x_size,
             y_size: y_size,
             pixels: pixels,
+            fill_color: Pixel::new(0.0, 255.0, 0.0, 255.0),
         }
     }
 

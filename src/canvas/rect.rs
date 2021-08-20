@@ -1,5 +1,4 @@
 use super::Canvas;
-use crate::pixel::Pixel;
 
 impl Canvas {
     pub fn draw_rect(&mut self, x: f64, y: f64, width: f64, height: f64) -> &Self {
@@ -8,7 +7,9 @@ impl Canvas {
             for (pixel_x, pixel) in row.iter_mut().enumerate() {
                 let a = get_rect_opacity(pixel_x, pixel_y);
                 if a > 0.0 {
-                    *pixel = pixel.combine(Pixel::new(0.0, 255.0, 0.0, a));
+                    let mut px = self.fill_color;
+                    px.a = a;
+                    *pixel = pixel.combine(px);
                 }
             }
         }
