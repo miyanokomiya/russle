@@ -3,28 +3,32 @@ use std::ops::{Add, Sub};
 
 #[derive(Clone, Copy, Debug, PartialEq)]
 pub struct Pixel {
-    pub r: u8,
-    pub g: u8,
-    pub b: u8,
-    pub a: u8,
+    pub r: f64,
+    pub g: f64,
+    pub b: f64,
+    pub a: f64,
 }
 
 impl Pixel {
-    pub fn new(r: u8, g: u8, b: u8, a: u8) -> Self {
-        Self {
-            r: r,
-            g: g,
-            b: b,
-            a: a,
-        }
+    pub fn new(r: f64, g: f64, b: f64, a: f64) -> Self {
+        Self { r, g, b, a }
+    }
+
+    pub fn to_u8(self) -> (u8, u8, u8, u8) {
+        (
+            self.r.round() as u8,
+            self.g.round() as u8,
+            self.b.round() as u8,
+            self.a.round() as u8,
+        )
     }
 
     pub fn combine(self, target: Self) -> Self {
-        let alpha = (target.a as f64) / 255.0;
+        let alpha = target.a / 255.0;
         Self::new(
-            lerp(self.r as f64, target.r as f64, alpha).round() as u8,
-            lerp(self.g as f64, target.g as f64, alpha).round() as u8,
-            lerp(self.b as f64, target.b as f64, alpha).round() as u8,
+            lerp(self.r, target.r, alpha),
+            lerp(self.g, target.g, alpha),
+            lerp(self.b, target.b, alpha),
             self.a,
         )
     }
@@ -34,10 +38,10 @@ impl Add for Pixel {
     type Output = Self;
     fn add(self, other: Self) -> Self {
         Self {
-            r: self.r.saturating_add(other.r),
-            g: self.g.saturating_add(other.g),
-            b: self.b.saturating_add(other.b),
-            a: self.a.saturating_add(other.a),
+            r: (self.r + other.r).min(255.0),
+            g: (self.g + other.g).min(255.0),
+            b: (self.b + other.b).min(255.0),
+            a: (self.a + other.a).min(255.0),
         }
     }
 }
@@ -46,10 +50,10 @@ impl Sub for Pixel {
     type Output = Self;
     fn sub(self, other: Self) -> Self {
         Self {
-            r: self.r.saturating_sub(other.r),
-            g: self.g.saturating_sub(other.g),
-            b: self.b.saturating_sub(other.b),
-            a: self.a.saturating_sub(other.a),
+            r: (self.r - other.r).max(0.0),
+            g: (self.g - other.g).max(0.0),
+            b: (self.b - other.b).max(0.0),
+            a: (self.a - other.a).max(0.0),
         }
     }
 }
@@ -60,29 +64,29 @@ mod tests {
 
     #[test]
     fn test_add_normal() {
-        let v1 = Pixel::new(1, 2, 3, 4);
-        let v2 = Pixel::new(3, 4, 5, 6);
-        assert_eq!(Pixel::new(4, 6, 8, 10), v1 + v2);
+        let v1 = Pixel::new(1.0, 2.0, 3.0, 4.0);
+        let v2 = Pixel::new(3.0, 4.0, 5.0, 6.0);
+        assert_eq!(Pixel::new(4.0, 6.0, 8.0, 10.0), v1 + v2);
     }
 
     #[test]
     fn test_add_overflow() {
-        let v1 = Pixel::new(200, 200, 200, 200);
-        let v2 = Pixel::new(100, 100, 100, 100);
-        assert_eq!(Pixel::new(255, 255, 255, 255), v1 + v2);
+        let v1 = Pixel::new(200.0, 200.0, 200.0, 200.0);
+        let v2 = Pixel::new(100.0, 100.0, 100.0, 100.0);
+        assert_eq!(Pixel::new(255.0, 255.0, 255.0, 255.0), v1 + v2);
     }
 
     #[test]
     fn test_sub_normal() {
-        let v1 = Pixel::new(1, 2, 3, 4);
-        let v2 = Pixel::new(3, 4, 5, 6);
-        assert_eq!(Pixel::new(2, 2, 2, 2), v2 - v1);
+        let v1 = Pixel::new(1.0, 2.0, 3.0, 4.0);
+        let v2 = Pixel::new(3.0, 4.0, 5.0, 6.0);
+        assert_eq!(Pixel::new(2.0, 2.0, 2.0, 2.0), v2 - v1);
     }
 
     #[test]
     fn test_sub_overflow() {
-        let v1 = Pixel::new(200, 200, 200, 200);
-        let v2 = Pixel::new(100, 100, 100, 100);
-        assert_eq!(Pixel::new(0, 0, 0, 0), v2 - v1);
+        let v1 = Pixel::new(200.0, 200.0, 200.0, 200.0);
+        let v2 = Pixel::new(100.0, 100.0, 100.0, 100.0);
+        assert_eq!(Pixel::new(0.0, 0.0, 0.0, 0.0), v2 - v1);
     }
 }

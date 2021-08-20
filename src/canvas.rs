@@ -16,7 +16,7 @@ impl Canvas {
         for _ in 0..y_size {
             let mut row: Vec<Pixel> = vec![];
             for _ in 0..x_size {
-                row.push(Pixel::new(0, 0, 0, 255));
+                row.push(Pixel::new(0.0, 0.0, 0.0, 255.0));
             }
             pixels.push(row);
         }
@@ -53,8 +53,8 @@ mod tests {
     #[test]
     fn test_new() {
         let canvas = Canvas::new(10, 8, 6);
-        assert_eq!(canvas.pixels.len(), 8);
-        assert_eq!(canvas.pixels[0].len(), 6);
+        assert_eq!(canvas.pixels.len(), 6);
+        assert_eq!(canvas.pixels[0].len(), 8);
     }
 
     #[test]
@@ -66,11 +66,11 @@ mod tests {
     #[test]
     fn test_set_pixel() {
         let mut canvas = Canvas::new(10, 3, 3);
-        canvas.set_pixel(1, 2, Pixel::new(1, 2, 3, 4));
-        assert_eq!(canvas.pixels[2][1], Pixel::new(1, 2, 3, 4));
+        canvas.set_pixel(1, 2, Pixel::new(1.0, 2.0, 3.0, 4.0));
+        assert_eq!(canvas.pixels[2][1], Pixel::new(1.0, 2.0, 3.0, 4.0));
 
         // should ignore if the pair of indexes is out of range
-        canvas.set_pixel(4, 2, Pixel::new(1, 2, 3, 4));
-        canvas.set_pixel(2, 4, Pixel::new(1, 2, 3, 4));
+        canvas.set_pixel(4, 2, Pixel::new(1.0, 2.0, 3.0, 4.0));
+        canvas.set_pixel(2, 4, Pixel::new(1.0, 2.0, 3.0, 4.0));
     }
 }

@@ -19,9 +19,10 @@ fn main() {
     for y in 0..imgy {
         for x in 0..imgx {
             let pixel = imgbuf.get_pixel_mut(x, y);
-            let px = canvas.pixels[(y / canvas.px_size as u32) as usize]
-                [(x / canvas.px_size as u32) as usize];
-            *pixel = image::Rgba([px.r, px.g, px.b, px.a]);
+            let (r, g, b, a) = canvas.pixels[(y / canvas.px_size as u32) as usize]
+                [(x / canvas.px_size as u32) as usize]
+                .to_u8();
+            *pixel = image::Rgba([r, g, b, a]);
         }
     }
 
