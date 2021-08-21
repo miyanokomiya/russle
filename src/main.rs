@@ -15,10 +15,15 @@ fn main() {
     // canvas.draw_rect(10.4, 5.4, 4.8, 2.8);
     // canvas.draw_rect(20.9, 5.0, 4.1, 2.3);
 
-    canvas.draw_circle(20.0, 10.0, 5.5);
-    canvas.draw_circle(3.0, 3.0, 1.0);
-    canvas.draw_circle(6.0, 3.0, 0.5);
-    canvas.draw_circle(6.0, 6.0, 0.8);
+    // canvas.draw_circle(20.0, 10.0, 5.5);
+    // canvas.draw_circle(3.0, 3.0, 1.0);
+    // canvas.draw_circle(6.0, 3.0, 0.5);
+    // canvas.draw_circle(6.0, 6.0, 0.8);
+
+    canvas.draw_line(3.0, 3.0, 10.0, 3.0);
+    canvas.draw_line(3.0, 5.0, 3.0, 12.0);
+    canvas.draw_line(5.0, 5.0, 15.0, 10.0);
+    canvas.draw_line(15.0, 5.0, 20.0, 15.0);
 
     let mut imgbuf = image::ImageBuffer::new(imgx, imgy);
     for y in 0..imgy {
