@@ -88,6 +88,7 @@ mod tests {
         assert_eq!(target(10, 5), 255.0);
     }
 
+    #[test]
     fn test_get_line_opacity_fn_long_y() {
         let target = get_line_opacity_fn(0.0, 0.0, 0.0, 10.0, 1.0);
         assert_eq!(target(0, 0), 255.0);
