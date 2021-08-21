@@ -22,7 +22,8 @@ fn main() {
 
     canvas.draw_line(3.0, 3.0, 10.0, 3.0);
     canvas.draw_line(3.0, 5.0, 3.0, 12.0);
-    canvas.draw_line(5.0, 5.0, 15.0, 10.0);
+    canvas.stroke_width = 3.0;
+    canvas.draw_line(7.0, 7.0, 12.0, 10.0);
     canvas.draw_line(15.0, 5.0, 20.0, 15.0);
 
     let mut imgbuf = image::ImageBuffer::new(imgx, imgy);

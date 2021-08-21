@@ -11,6 +11,8 @@ pub struct Canvas {
     pub y_size: usize,
     pub pixels: Vec<Vec<Pixel>>,
     pub fill_color: Pixel,
+    pub stroke_color: Pixel,
+    pub stroke_width: f64,
 }
 
 impl Canvas {
@@ -31,6 +33,8 @@ impl Canvas {
             y_size: y_size,
             pixels: pixels,
             fill_color: Pixel::new(0.0, 255.0, 0.0, 255.0),
+            stroke_color: Pixel::new(0.0, 0.0, 255.0, 255.0),
+            stroke_width: 1.0,
         }
     }
 
@@ -51,6 +55,20 @@ impl Canvas {
                 let a = get_opacity(pixel_x, pixel_y);
                 if a > 0.0 {
                     let mut px = self.fill_color;
+                    px.a = a;
+                    *pixel = pixel.combine(px);
+                }
+            }
+        }
+        self
+    }
+
+    pub fn stroke_pixels(&mut self, get_opacity: impl Fn(usize, usize) -> f64) -> &Self {
+        for (pixel_y, row) in self.pixels.iter_mut().enumerate() {
+            for (pixel_x, pixel) in row.iter_mut().enumerate() {
+                let a = get_opacity(pixel_x, pixel_y);
+                if a > 0.0 {
+                    let mut px = self.stroke_color;
                     px.a = a;
                     *pixel = pixel.combine(px);
                 }
