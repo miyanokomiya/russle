@@ -11,9 +11,14 @@ fn main() {
     let mut canvas = Canvas::new(10, 40, 20);
     let (imgx, imgy) = canvas.get_image_size();
 
-    canvas.draw_rect(2.0, 2.0, 2.0, 4.0);
-    canvas.draw_rect(10.4, 5.4, 4.8, 2.8);
-    canvas.draw_rect(20.9, 5.0, 4.1, 2.3);
+    // canvas.draw_rect(2.0, 2.0, 2.0, 4.0);
+    // canvas.draw_rect(10.4, 5.4, 4.8, 2.8);
+    // canvas.draw_rect(20.9, 5.0, 4.1, 2.3);
+
+    canvas.draw_circle(20.0, 10.0, 5.5);
+    canvas.draw_circle(3.0, 3.0, 1.0);
+    canvas.draw_circle(6.0, 3.0, 0.5);
+    canvas.draw_circle(6.0, 6.0, 0.8);
 
     let mut imgbuf = image::ImageBuffer::new(imgx, imgy);
     for y in 0..imgy {

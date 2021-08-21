@@ -2,18 +2,7 @@ use super::Canvas;
 
 impl Canvas {
     pub fn draw_rect(&mut self, x: f64, y: f64, width: f64, height: f64) -> &Self {
-        let get_rect_opacity = get_rect_opacity_fn(x, y, width, height);
-        for (pixel_y, row) in self.pixels.iter_mut().enumerate() {
-            for (pixel_x, pixel) in row.iter_mut().enumerate() {
-                let a = get_rect_opacity(pixel_x, pixel_y);
-                if a > 0.0 {
-                    let mut px = self.fill_color;
-                    px.a = a;
-                    *pixel = pixel.combine(px);
-                }
-            }
-        }
-        self
+        self.draw_pixels(get_rect_opacity_fn(x, y, width, height))
     }
 }
 

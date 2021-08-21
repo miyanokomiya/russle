@@ -1,5 +1,6 @@
 use crate::pixel::Pixel;
 
+pub mod circle;
 pub mod rect;
 
 #[derive(Clone, Debug, PartialEq)]
@@ -39,6 +40,20 @@ impl Canvas {
     pub fn set_pixel(&mut self, x: usize, y: usize, pixel: Pixel) -> &Self {
         if y < self.pixels.len() && x < self.pixels[y].len() {
             self.pixels[y][x] = pixel;
+        }
+        self
+    }
+
+    pub fn draw_pixels(&mut self, get_opacity: impl Fn(usize, usize) -> f64) -> &Self {
+        for (pixel_y, row) in self.pixels.iter_mut().enumerate() {
+            for (pixel_x, pixel) in row.iter_mut().enumerate() {
+                let a = get_opacity(pixel_x, pixel_y);
+                if a > 0.0 {
+                    let mut px = self.fill_color;
+                    px.a = a;
+                    *pixel = pixel.combine(px);
+                }
+            }
         }
         self
     }
