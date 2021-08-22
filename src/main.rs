@@ -7,6 +7,7 @@ mod seg2;
 mod vec2;
 
 use canvas::Canvas;
+use vec2::Vec2;
 
 fn main() {
     let mut canvas = Canvas::new(10, 40, 20);
@@ -21,11 +22,23 @@ fn main() {
     // canvas.draw_circle(6.0, 3.0, 0.5);
     // canvas.draw_circle(6.0, 6.0, 0.8);
 
-    canvas.draw_line(3.0, 3.0, 10.0, 3.0);
-    canvas.draw_line(3.0, 5.0, 3.0, 12.0);
-    canvas.stroke_width = 3.0;
-    canvas.draw_line(7.0, 7.0, 12.0, 10.0);
-    canvas.draw_line(15.0, 5.0, 20.0, 15.0);
+    // canvas.draw_line(3.0, 3.0, 10.0, 3.0);
+    // canvas.draw_line(3.0, 5.0, 3.0, 12.0);
+    // canvas.stroke_width = 3.0;
+    // canvas.draw_line(7.0, 7.0, 12.0, 10.0);
+    // canvas.draw_line(15.0, 5.0, 20.0, 15.0);
+
+    // canvas.draw_polygon(vec![
+    //     Vec2::new(1.0, 1.0),
+    //     Vec2::new(5.0, 1.0),
+    //     Vec2::new(5.0, 5.0),
+    //     Vec2::new(1.0, 5.0),
+    // ]);
+    canvas.draw_polygon(vec![
+        Vec2::new(10.0, 1.0),
+        Vec2::new(25.0, 5.0),
+        Vec2::new(10.0, 13.0),
+    ]);
 
     let mut imgbuf = image::ImageBuffer::new(imgx, imgy);
     for y in 0..imgy {

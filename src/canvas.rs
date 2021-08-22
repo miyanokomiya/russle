@@ -2,6 +2,7 @@ use crate::pixel::Pixel;
 
 pub mod circle;
 pub mod line;
+pub mod polygon;
 pub mod rect;
 
 #[derive(Clone, Debug, PartialEq)]
