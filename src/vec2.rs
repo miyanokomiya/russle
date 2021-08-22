@@ -10,6 +10,13 @@ impl Vec2 {
     pub fn new(x: f64, y: f64) -> Self {
         Self { x: x, y: y }
     }
+
+    pub fn multi(self, c: f64) -> Self {
+        Self {
+            x: self.x * c,
+            y: self.y * c,
+        }
+    }
 }
 
 impl Add for Vec2 {

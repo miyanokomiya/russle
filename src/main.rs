@@ -3,6 +3,7 @@ extern crate image;
 mod canvas;
 mod math;
 mod pixel;
+mod seg2;
 mod vec2;
 
 use canvas::Canvas;
