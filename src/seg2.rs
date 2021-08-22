@@ -11,7 +11,7 @@ impl Seg2 {
         Self { p1, p2 }
     }
 
-    pub fn cross(self, target: Self) -> Option<Vec2> {
+    pub fn cross(self, target: Self, head: bool, tail: bool) -> Option<Vec2> {
         let a = self.p1;
         let b = self.p2;
         let c = target.p1;
@@ -36,11 +36,31 @@ impl Seg2 {
         let s = s_top / s_bottom;
         let t = t_top / t_bottom;
 
-        if s < 0.0 || 1.0 < s || t < 0.0 || 1.0 < t {
+        if t < 0.0 || 1.0 < t {
             return None;
         }
 
-        Some(Vec2::new(a.x + s * ba_x, a.y + t * ba_y))
+        if head {
+            if s < 0.0 {
+                return None;
+            }
+        } else {
+            if s <= 0.0 {
+                return None;
+            }
+        }
+
+        if tail {
+            if 1.0 < s {
+                return None;
+            }
+        } else {
+            if 1.0 <= s {
+                return None;
+            }
+        }
+
+        Some(Vec2::new(a.x + s * ba_x, a.y + s * ba_y))
     }
 }
 
@@ -53,13 +73,13 @@ mod tests {
         let seg1 = Seg2::new(Vec2::new(0.0, 0.0), Vec2::new(5.0, 0.0));
 
         let seg2 = Seg2::new(Vec2::new(2.0, -2.0), Vec2::new(2.0, 2.0));
-        assert_eq!(seg1.cross(seg2), Some(Vec2::new(2.0, 0.0)));
+        assert_eq!(seg1.cross(seg2, true, true), Some(Vec2::new(2.0, 0.0)));
 
         let seg3 = Seg2::new(Vec2::new(20.0, -2.0), Vec2::new(20.0, 2.0));
-        assert_eq!(seg1.cross(seg3), None);
+        assert_eq!(seg1.cross(seg3, true, true), None);
 
         let seg4 = Seg2::new(Vec2::new(0.0, 0.0), Vec2::new(10.0, 10.0));
         let seg5 = Seg2::new(Vec2::new(10.0, 0.0), Vec2::new(0.0, 10.0));
-        assert_eq!(seg4.cross(seg5), Some(Vec2::new(5.0, 5.0)));
+        assert_eq!(seg4.cross(seg5, true, true), Some(Vec2::new(5.0, 5.0)));
     }
 }
