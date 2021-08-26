@@ -38,6 +38,22 @@ fn main() {
         Vec2::new(10.0, 1.0),
         Vec2::new(25.0, 5.0),
         Vec2::new(10.0, 13.0),
+        Vec2::new(15.0, 13.0),
+        Vec2::new(15.0, 17.0),
+        Vec2::new(10.0, 17.0),
+        Vec2::new(8.0, 19.0),
+        Vec2::new(6.0, 17.0),
+    ]);
+
+    canvas.draw_polygon(vec![
+        Vec2::new(25.0, 10.0),
+        Vec2::new(28.0, 10.0),
+        Vec2::new(28.0, 5.0),
+        Vec2::new(32.0, 5.0),
+        Vec2::new(32.0, 10.0),
+        Vec2::new(35.0, 10.0),
+        Vec2::new(35.0, 15.0),
+        Vec2::new(25.0, 15.0),
     ]);
 
     let mut imgbuf = image::ImageBuffer::new(imgx, imgy);
