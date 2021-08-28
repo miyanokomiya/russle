@@ -16,7 +16,8 @@ fn get_polygon_opacity_fn(polygon: Vec<Vec2>) -> impl Fn(usize, usize) -> f64 {
 
     let polygon_segs = get_polygon_segs(&polygon);
 
-    let cross_list_row: Vec<Vec<Vec2>> = ((min_y.floor() as usize)..(max_y.ceil()) as usize)
+    let cross_list_row: Vec<Vec<Vec2>> = ((min_y.floor() as usize)
+        ..((max_y + 1.0).floor()) as usize)
         .map(|px_y| get_cross_list_for_y(&polygon_segs, min_x, max_x, px_y as f64))
         .collect();
 
@@ -73,5 +74,26 @@ fn get_polygon_opacity_by_x(cross_list: &Vec<Vec2>, px_x: usize) -> f64 {
         0.0
     } else {
         255.0
+    }
+}
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+    use crate::vec2::Vec2;
+
+    #[test]
+    fn test_get_polygon_opacity_fn() {
+        let f = get_polygon_opacity_fn(vec![
+            Vec2::new(0.0, 0.0),
+            Vec2::new(5.0, 0.0),
+            Vec2::new(5.0, 5.0),
+            Vec2::new(0.0, 5.0),
+        ]);
+        assert_eq!(f(0, 0), 255.0);
+        assert_eq!(f(4, 0), 255.0);
+        assert_eq!(f(5, 0), 0.0);
+        assert_eq!(f(0, 4), 255.0);
+        assert_eq!(f(0, 5), 0.0);
     }
 }
